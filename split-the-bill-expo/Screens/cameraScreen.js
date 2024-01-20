@@ -4,6 +4,7 @@ import { StyleSheet, Text, View, SafeAreaView, Button, Image } from 'react-nativ
 //import { uploadPhotoToServer } from './fileUpload';
 import TransparentCircleButton from '../Components/TransparentCircleButton';
 import ResultsScreen from './ResultsScreen';
+import ItemScreen from "./ItemScreen";
 
 const CameraScreen = ({navigation}) => {
   let cameraRef = useRef();
@@ -44,12 +45,17 @@ const CameraScreen = ({navigation}) => {
       navigation.navigate(ResultsScreen)
     }
 
+    let itemScreen = () => {
+      navigation.navigate(ItemScreen)
+    }
+
     return (
       <SafeAreaView style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <Image style={{ alignSelf: 'stretch', flex: 1 }} source={{ uri: "data:image/jpg;base64," + photo.base64 }} />
         <Button title="Discard" onPress={() => setPhoto(undefined)} />
         <Button title="Done" onPress={done} />
         <Button title="Results Test" onPress={results} />
+        <Button title="Item Test" onPress={itemScreen} />
       </SafeAreaView>
     );
   }

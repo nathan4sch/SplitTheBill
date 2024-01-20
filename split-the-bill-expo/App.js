@@ -7,8 +7,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import CameraScreen from "./Screens/CameraScreen";
 import LoadingScreen from "./Screens/LoadingScreen";
 import ResultsScreen from "./Screens/ResultsScreen";
-
-
+import ItemScreen from "./Screens/ItemScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -28,6 +27,10 @@ function App() {
         <Stack.Screen 
           name="ResultsScreen"
           component={ResultsScreen}
+        />
+        <Stack.Screen 
+          name="ItemScreen"
+          component={ItemScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>
