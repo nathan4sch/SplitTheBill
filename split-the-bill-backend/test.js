@@ -11,27 +11,19 @@ async function main() {
     // removed await
     worker.terminate();
 
-    const assistant = await openai.beta.assistants.create({
-        name: "Receipt Parser",
-        instructions: "You are a receipt parser. You will receive text translated from an image of a receipt and you will output each item and its price.",
-        model: "gpt-3.5-turbo"
+
+    const completion = await openai.chat.completions.create({
+        messages: [
+          {
+            role: "system",
+            content: "You are a receipt parser. You will receive text translated from an image of a receipt and you will output each item and its price in JSON format.",
+          },
+          { role: "user", content: text },
+        ],
+        model: "gpt-3.5-turbo-1106",
+        response_format: { type: "json_object" },
       });
-
-    const thread = await openai.beta.threads.create();
-    await openai.beta.threads.messages.create(thread.id, {
-        role: "user",
-        content: text
-    });
-
-    const run = await openai.beta.threads.runs.create(thread.id, { 
-        assistant_id: assistant.id,
-    });
-    await openai.beta.threads.runs.retrieve(
-        thread.id,
-        run.id
-      );
-    const messages = await openai.beta.threads.messages.list(thread.id);
-    console.log(messages.data[0].content);
+    console.log(completion.choices[0].message.content);
 
 }
 
