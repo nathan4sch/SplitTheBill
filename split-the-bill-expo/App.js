@@ -8,6 +8,7 @@ import CameraScreen from "./Screens/CameraScreen";
 import LoadingScreen from "./Screens/LoadingScreen";
 
 
+
 const Stack = createNativeStackNavigator();
 
 function App() {
