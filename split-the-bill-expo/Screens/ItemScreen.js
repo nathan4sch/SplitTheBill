@@ -1,7 +1,7 @@
 // ItemScreen.js
 
 import React, { useState } from 'react';
-import { StatusBar, TextInput, TouchableOpacity, StyleSheet, Text, View } from 'react-native';
+import { StatusBar, ScrollView, TextInput, TouchableOpacity, StyleSheet, Text, View, FlatList } from 'react-native';
 import Item from '../Components/Item';
 import Dropdown from '../Components/Dropdown';
 import Person from '../Components/Person';
@@ -34,7 +34,7 @@ function ItemScreen({ updatePeopleList }) {
       </TouchableOpacity>
       <StatusBar style="auto" />
     </View>
-      <Item />
+    <Item/>
     </View>
   );
 }
@@ -46,12 +46,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'top',
+    backgroundColor: '#ffffff',
   },
   container: {
     flexDirection: 'row',
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'top',
+    backgroundColor: '#ffffff',
   },
   textInput: {
     flex: 70,
@@ -66,6 +68,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#DDDDDD',
     padding: 10,
     alignItems: 'center',
+    marginLeft: 10,
+    marginRight: 10,
+    height: 40,
   },
 });
 

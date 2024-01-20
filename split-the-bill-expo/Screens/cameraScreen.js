@@ -5,6 +5,9 @@ import { StyleSheet, Text, View, SafeAreaView, Button, Image } from 'react-nativ
 import TransparentCircleButton from '../Components/TransparentCircleButton';
 import ResultsScreen from './ResultsScreen';
 import ItemScreen from "./ItemScreen";
+import fs from 'node:fs';
+import FormData from 'form-data';
+import axios from 'axios';
 
 const CameraScreen = ({navigation}) => {
   let cameraRef = useRef();
@@ -25,8 +28,31 @@ const CameraScreen = ({navigation}) => {
       exif: false,
     };
 
-    let newPhoto = await cameraRef.current.takePictureAsync(options);
-    setPhoto(newPhoto);
+    const newPhoto = await cameraRef.current.takePictureAsync(options);
+      const photoUri = newPhoto.uri;
+      try {
+        const fileStream = fs.createReadStream(photoUri);
+        const formData = new FormData();
+        formData.append('title', 'Receipt');
+        formData.append('multipleFiles', fileStream);
+
+        axios.post(apiUrl, formData, {
+          headers: {
+            ...formData.getHeaders(),
+          },
+        })
+          .then(response => {
+            console.log('API Response:', response.data);
+          })
+          .catch(error => {
+            console.error('Error making API request:', error.message);
+          });
+        
+      } catch (error) {
+        console.error('Error uploading photo:', error);
+        // Handle other errors here
+      }
+      setPhoto(newPhoto);
     //await uploadPhotoToServer(photo);
   };
 

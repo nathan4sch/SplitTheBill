@@ -26,14 +26,15 @@ const Dropdown = () => {
           },
         }}
         value={selectedValue}
-      />
+        placeholder={{ label: 'Select Person', value: null }}      
+        />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 20,
+    marginTop: 10,
     marginLeft: 10,
     marginRight: 10,
   },

@@ -1,9 +1,21 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { CheckBox } from "react-native-btr";
+{/*
+const Item = {
+  createItem: (name,price) => {
+    return { 
+      name: name || 'New Item', 
+      price: price || '0.0', 
+    };
+  }
 
-const Item = () => {
+};
+*/}
+const Item = (name, price, count) => {
+  
   const [currentPerson, setCurrentPerson] = useState(null);
+  const [currentCount, setCurrentCount] = useState(null);
 
   const toggle = () => {
     
@@ -44,7 +56,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   textSection: {
-    flex: 1,
+    flex: 2,
     alignItems: 'center',
   }
 });

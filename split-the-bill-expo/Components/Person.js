@@ -1,8 +1,16 @@
 const Person = {
   createPerson: (name) => {
-    // Customize this method to create a new person object with the provided name
-    return { name: name || 'New Person', Total: 0.0 };
+    return { 
+      name: name || 'New Person', 
+      Total: 0.0,
+      items: [] // Initialize the items list as an empty array
+    };
   },
+
+  addItem: (person, newItem) => {
+    // Add a new item to the person's items list
+    person.items.push(newItem);
+  }
 };
 
 export default Person;

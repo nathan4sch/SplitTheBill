@@ -21,7 +21,7 @@ return (
   return (
     <View style={styles.container}>
       <Text style={styles.loadingText}>Loading</Text>
-      <ActivityIndicator size="large" color="#ff4500" />
+      <ActivityIndicator size="large" color="#ffffff" />
     </View>
   );
 };
@@ -39,12 +39,13 @@ backgroundImage: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#4c5057',
   },
   loadingText: {
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 20,
+    color: '#ffffff',
   },
 });
 
