@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, FlatList, StyleSheet, Dimensions, Button } from 'react-native';
 import Person from '../Components/Person';
 
-const ResultsScreen = () => {
+/*const ResultsScreen = () => {
     const [data, setData] = useState([
         { name: 'Nathan', Total: 67.30 },
         { name: 'Evan', Total: 45.60 },
@@ -14,11 +14,9 @@ const ResultsScreen = () => {
         { name: 'Logan', Total: 78.90 },
         // Add more items as needed
       ]);
-
-      const addNewPerson = () => {
-        const newPerson = Person.createPerson(); // Call a method from the Person component to create a new person
-        setData((prevData) => [...prevData, newPerson]);
-      };
+      */
+const ResultsScreen = ({ peopleList }) => {
+  const [data, setData] = useState(peopleList);
 
   const renderItem = ({ item }) => (
     <View style={styles.item}>
@@ -34,7 +32,6 @@ const ResultsScreen = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Results</Text>
-      <Button title="Add Person" onPress={addNewPerson} />
       <View style={styles.columnTitles}>
         <View style={styles.nameColumn}>
           <Text style={styles.columnTitle}>Name</Text>

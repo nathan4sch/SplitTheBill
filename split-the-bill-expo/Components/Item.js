@@ -20,12 +20,12 @@ const Item = () => {
 
       {/* Middle section with text */}
       <View style={styles.textSection}>
-        <Text>Some text in the middle</Text>
+        <Text>Item Name</Text>
       </View>
 
       {/* Right section with text */}
       <View style={styles.textSection}>
-        <Text>Some other text on the right</Text>
+        <Text>Price</Text>
       </View>
     </View>
   );
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
   },
   checkboxSection: {
     flex: 1,
-    alignItems: 'flex-start',
+    alignItems: 'center',
   },
   textSection: {
     flex: 1,

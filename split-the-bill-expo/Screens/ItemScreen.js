@@ -1,25 +1,71 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+// ItemScreen.js
+
+import React, { useState } from 'react';
+import { StatusBar, TextInput, TouchableOpacity, StyleSheet, Text, View } from 'react-native';
 import Item from '../Components/Item';
 import Dropdown from '../Components/Dropdown';
+import Person from '../Components/Person';
 
-function ItemScreen() {
+function ItemScreen({ updatePeopleList }) {
+  const [inputText, setInputText] = useState('');
+  const [data, setData] = useState([]);
+
+  const addNewPerson = () => {
+    const newPerson = Person.createPerson(inputText); // Pass inputText as the name parameter
+    setData((prevData) => [...prevData, newPerson]);
+    setInputText('');
+
+    // Call the updatePeopleList function to update the list in ResultsScreen
+    updatePeopleList((prevPeopleList) => [...prevPeopleList, newPerson]);
+  };
+
   return (
+    <View style = {styles.topContainer}>
     <View style={styles.container}>
       <Dropdown />
-      <Text>Open up App.js to start working on your app!</Text>
-      <Item />
+      <TextInput
+        style={styles.textInput}
+        placeholder="Enter Name"
+        value={inputText}
+        onChangeText={(text) => setInputText(text)}
+      />
+      <TouchableOpacity onPress={addNewPerson} style={styles.enterButton}>
+        <Text>Enter</Text>
+      </TouchableOpacity>
       <StatusBar style="auto" />
+    </View>
+      <Item />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  topContainer: {
+    flexDirection: 'column',
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'top',
+  },
+  container: {
+    flexDirection: 'row',
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'top',
+  },
+  textInput: {
+    flex: 70,
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    paddingHorizontal: 10,
+    alignItems: 'center',
+  },
+  enterButton: {
+    flex: 20,
+    backgroundColor: '#DDDDDD',
+    padding: 10,
+    alignItems: 'center',
   },
 });
 

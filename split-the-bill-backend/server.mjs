@@ -15,7 +15,7 @@ const server = http.createServer((req, res) => {
         return;
       }
       console.log(files.multipleFiles[0].filepath);
-      fs.rename(files.multipleFiles[0].filepath, 'C:\\Users\\evman\\test.jpg', (err) => {
+      fs.rename(files.multipleFiles[0].filepath, 'C:\\Users\\evman\\car.png', (err) => {
         if (err) throw err;
         console.log("YEAH BABYYY");
       });

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Dropdown = () => {
   const [selectedValue, setSelectedValue] = useState(null);
