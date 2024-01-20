@@ -1,71 +1,129 @@
-import React, { useState } from 'react';
-import { Button, Image, View } from 'react-native';
-import {launchImageLibrary, launchCamera} from 'react-native-image-picker';
+import { StatusBar } from 'expo-status-bar';
+import { StyleSheet, Text, View, SafeAreaView, Button, Image } from 'react-native';
+import { useEffect, useRef, useState } from 'react';
+import { Camera } from 'expo-camera';
+import { shareAsync } from 'expo-sharing';
+import * as MediaLibrary from 'expo-media-library';
+import TransparentCircleButton from './TransparentCircleButton'; // Import your custom button component
+
+//import { ImagePicker } from 'expo-image-picker';
+import ImageCropPicker from 'react-native-image-crop-picker';
 
 
-const App = () => {
-  const [selectedImage, setSelectedImage] = useState(null);
+export default function App() {
+  let cameraRef = useRef();
+  const [hasCameraPermission, setHasCameraPermission] = useState();
+  const [hasMediaLibraryPermission, setHasMediaLibraryPermission] = useState();
+  const [photo, setPhoto] = useState();
 
-  const openImagePicker = () => {
-    const options = {
-      mediaType: 'photo',
-      includeBase64: false,
-      maxHeight: 2000,
-      maxWidth: 2000,
+  useEffect(() => {
+    (async () => {
+      const cameraPermission = await Camera.requestCameraPermissionsAsync();
+      const mediaLibraryPermission = await MediaLibrary.requestPermissionsAsync();
+      setHasCameraPermission(cameraPermission.status === "granted");
+      setHasMediaLibraryPermission(mediaLibraryPermission.status === "granted");
+    })();
+  }, []);
+
+  if (hasCameraPermission === undefined) {
+    return <Text>Requesting permissions...</Text>
+  } else if (!hasCameraPermission) {
+    return <Text>Permission for camera not granted. Please change this in settings.</Text>
+  }
+
+  let takePic = async () => {
+    let options = {
+      quality: 1,
+      base64: true,
+      exif: false,
+      //allowsEditing: true,
+      //aspect: [1, 1],
     };
 
-    launchImageLibrary(options, (response) => {
-      if (response.didCancel) {
-        console.log('User cancelled image picker');
-      } else if (response.error) {
-        console.log('Image picker error: ', response.error);
-      } else {
-        let imageUri = response.uri || response.assets?.[0]?.uri;
-        setSelectedImage(imageUri);
+    let newPhoto = await cameraRef.current.takePictureAsync(options);
+    /*let croppedImage;
+
+    ImageCropPicker.openCropper({
+      path: newPhoto.uri,
+      width: 300,
+      height: 300,
+      cropping: true,
+      includeBase64: true,
+    }).then((croppedImage) => {
+      setPhoto(croppedImage);
+    });
+    */
+/*
+    ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 1,
+    }).then((result) => {
+      if (!result.cancelled) {
+        // Crop the image
+        ImageCropPicker.openCropper({
+          path: result.uri,
+          width: 300,
+          height: 300,
+          cropping: true,
+          includeBase64: true,
+        }).then((croppedImage) => {
+          setPhoto(croppedImage);
+        });
       }
     });
+    end new */
+    setPhoto(newPhoto);
+    //setPhoto(croppedImage);
   };
-  
-  handleCameraLaunch = () => {
-    const options = {
-      mediaType: 'photo',
-      includeBase64: false,
-      maxHeight: 2000,
-      maxWidth: 2000,
+
+  if (photo) {
+    let sharePic = () => {
+      shareAsync(photo.uri).then(() => {
+        setPhoto(undefined);
+      });
     };
-  
-    launchCamera(options, response => {
-      console.log('Response = ', response);
-      if (response.didCancel) {
-        console.log('User cancelled camera');
-      } else if (response.error) {
-        console.log('Camera Error: ', response.error);
-      } else {
-        // Process the captured image
-        let imageUri = response.uri || response.assets?.[0]?.uri;
-        setSelectedImage(imageUri);
-        console.log(imageUri);
-      }
-    });
+
+    let savePhoto = () => {
+      MediaLibrary.saveToLibraryAsync(photo.uri).then(() => {
+        setPhoto(undefined);
+      });
+    };
+
+    return (
+      <SafeAreaView style={styles.container}>
+        <Image style={styles.preview} source={{ uri: "data:image/jpg;base64," + photo.base64 }} />
+        <Button title="Share" onPress={sharePic} />
+        {hasMediaLibraryPermission ? <Button title="Save" onPress={savePhoto} /> : undefined}
+        <Button title="Discard" onPress={() => setPhoto(undefined)} />
+      </SafeAreaView>
+    );
   }
 
   return (
-    <View style={{ flex: 1, justifyContent: 'center' }}>
-     {selectedImage && (
-          <Image
-            source={{ uri: selectedImage }}
-            style={{ flex: 1 }}
-            resizeMode="contain"
-          />
-    )}
-    <View style={{ marginTop: 20 }}>
-      <Button title="Choose from Device" onPress={openImagePicker} />
-    </View>
-    <View style={{ marginTop: 20,marginBottom: 50 }}>
-      <Button title="Open Camera" onPress={handleCameraLaunch} />
-    </View>
-  </View>
+    <Camera style={styles.container} ref={cameraRef}>
+      <View style={styles.buttonContainer}>
+        <TransparentCircleButton title="Take Pic" onPress={takePic} />
+      </View>
+      <StatusBar style="auto" />
+    </Camera>
   );
-};
+}
 
-export default App;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  buttonContainer: {
+    backgroundColor: '#fff',
+    alignSelf: 'flex-end',
+    marginVertical: 20,
+  },
+  preview: {
+    alignSelf: 'stretch',
+    flex: 1
+  }
+});
