@@ -5,9 +5,9 @@ import { Camera } from 'expo-camera';
 import { shareAsync } from 'expo-sharing';
 import * as MediaLibrary from 'expo-media-library';
 import TransparentCircleButton from './TransparentCircleButton'; // Import your custom button component
+import { uploadPhotoToServer } from './fileUpload';
 
-//import { ImagePicker } from 'expo-image-picker';
-import ImageCropPicker from 'react-native-image-crop-picker';
+//import ImagePicker from 'react-native-image-crop-picker';
 
 
 export default function App() {
@@ -16,6 +16,7 @@ export default function App() {
   const [hasMediaLibraryPermission, setHasMediaLibraryPermission] = useState();
   const [photo, setPhoto] = useState();
 
+  
   useEffect(() => {
     (async () => {
       const cameraPermission = await Camera.requestCameraPermissionsAsync();
@@ -36,67 +37,31 @@ export default function App() {
       quality: 1,
       base64: true,
       exif: false,
-      //allowsEditing: true,
-      //aspect: [1, 1],
     };
 
     let newPhoto = await cameraRef.current.takePictureAsync(options);
-    /*let croppedImage;
-
-    ImageCropPicker.openCropper({
-      path: newPhoto.uri,
-      width: 300,
-      height: 300,
-      cropping: true,
-      includeBase64: true,
-    }).then((croppedImage) => {
-      setPhoto(croppedImage);
-    });
-    */
-/*
-    ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect: [1, 1],
-      quality: 1,
-    }).then((result) => {
-      if (!result.cancelled) {
-        // Crop the image
-        ImageCropPicker.openCropper({
-          path: result.uri,
-          width: 300,
-          height: 300,
-          cropping: true,
-          includeBase64: true,
-        }).then((croppedImage) => {
-          setPhoto(croppedImage);
-        });
-      }
-    });
-    end new */
+    
     setPhoto(newPhoto);
-    //setPhoto(croppedImage);
+    
   };
 
   if (photo) {
-    let sharePic = () => {
-      shareAsync(photo.uri).then(() => {
-        setPhoto(undefined);
-      });
+    uploadPhotoToServer(photo);
+    
+    let done = () => {
+      //Allow functionality to send the picture to the server
+      //await response
+      //then go to another screen
     };
 
-    let savePhoto = () => {
-      MediaLibrary.saveToLibraryAsync(photo.uri).then(() => {
-        setPhoto(undefined);
-      });
-    };
+    //<Button title="Share" onPress={sharePic} />
+    //    {hasMediaLibraryPermission ? <Button title="Save" onPress={savePhoto} /> : undefined}
 
     return (
       <SafeAreaView style={styles.container}>
         <Image style={styles.preview} source={{ uri: "data:image/jpg;base64," + photo.base64 }} />
-        <Button title="Share" onPress={sharePic} />
-        {hasMediaLibraryPermission ? <Button title="Save" onPress={savePhoto} /> : undefined}
         <Button title="Discard" onPress={() => setPhoto(undefined)} />
+        <Button title="Done" onPress={done} />
       </SafeAreaView>
     );
   }

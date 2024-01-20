@@ -12,7 +12,6 @@ formData.append('file', new Blob([fileBuffer]), 'image.jpg');
 
 // Make the POST request using fetch
 fetch(url, {
-  method: 'POST',
   body: formData,
 })
   .then(response => response.text())

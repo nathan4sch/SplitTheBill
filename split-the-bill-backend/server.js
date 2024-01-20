@@ -1,37 +1,22 @@
 const http = require('node:http');
-const formidable = require('formidable');
-const fs = require('fs');
+import formidable, {errors as formidableErrors} from 'formidable';
 
 const hostname = '127.0.0.1';
 const port = 3000;
 const server = http.createServer((req, res) => {
-  /*
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/plain');
-  res.end('Hello World\n');
-  */
-  const form = new formidable.IncomingForm();
-  form.parse(req, (err, fields, files) => {
-    if (err) {
-      res.writeHead(500, { 'Content-Type': 'text/plain' });
-      res.end('Internal Server Error');
-      return;
-    }
-    const oldPath = files.file.path;
-    const newPath = "test1.jpg";
-
-    fs.rename(oldPath, newPath, (err) => {
-      if (err) {
-        res.writeHead(500, { 'Content-Type': 'text/plain' });
-        res.end('Error moving file');
-        return;
-      }
-
-      res.writeHead(200, { 'Content-Type': 'text/plain' });
-      res.end('File uploaded and moved!');
-    });
+  const form = formidable({});
+  let fields;
+  let files;
+  try {
+    [fields, files] = await form.parse(req);
+  } catch (err) {
+    console.error(err);
+    res.writeHead(err.httpCode || 400, { 'Content-Type': 'text/plain'});
+    res.end(String(err));
     return;
-  });
+  }
+  res.writeHead(200, {'Content-Type': 'application/json'});
+  res.end(JSON.stringify({ fields, files }, null, 2));
 });
 
 server.listen(port, hostname, () => {
