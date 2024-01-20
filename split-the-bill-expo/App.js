@@ -7,9 +7,24 @@ import * as MediaLibrary from 'expo-media-library';
 import TransparentCircleButton from './TransparentCircleButton'; // Import your custom button component
 import { uploadPhotoToServer } from './fileUpload';
 
+//Navigation
+import { NavigationContainer } from '@react-navigation/native';
+
+//Screen
+import CameraScreen from "./Screens/cameraScreen.js";
+
 //import ImagePicker from 'react-native-image-crop-picker';
 
 
+const App = () => {
+  return (
+    <NavigationContainer>
+      <CameraScreen />
+    </NavigationContainer>
+  );
+};
+
+/*
 function App() {
   let cameraRef = useRef();
   const [hasCameraPermission, setHasCameraPermission] = useState();
@@ -95,5 +110,6 @@ const styles = StyleSheet.create({
     flex: 1
   }
 });
+*/
 
 export default App

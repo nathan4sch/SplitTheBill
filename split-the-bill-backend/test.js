@@ -14,7 +14,7 @@ async function main() {
     const assistant = await openai.beta.assistants.create({
         name: "Receipt Parser",
         instructions: "You are a receipt parser. You will receive text translated from an image of a receipt and you will output each item and its price.",
-        model: "GPT-3.5-turbo-16k-0613"
+        model: "gpt-3.5-turbo"
       });
 
     const thread = await openai.beta.threads.create();
@@ -31,7 +31,7 @@ async function main() {
         run.id
       );
     const messages = await openai.beta.threads.messages.list(thread.id);
-    console.log(messages.data);
+    console.log(messages.data[0].content);
 
 }
 
