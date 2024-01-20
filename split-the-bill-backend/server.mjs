@@ -1,9 +1,9 @@
-const http = require('node:http');
+import http from 'node:http';
 import formidable, {errors as formidableErrors} from 'formidable';
 
 const hostname = '127.0.0.1';
 const port = 3000;
-const server = http.createServer((req, res) => {
+const server = http.createServer(async (req, res) => {
   const form = formidable({});
   let fields;
   let files;

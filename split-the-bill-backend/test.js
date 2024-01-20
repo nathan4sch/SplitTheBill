@@ -7,12 +7,14 @@ async function main() {
     const worker = await createWorker('eng');
     const { data: { text } } = await worker.recognize('receipt.jpg');
     console.log(text);
-    await worker.terminate();
+
+    // removed await
+    worker.terminate();
 
     const assistant = await openai.beta.assistants.create({
         name: "Receipt Parser",
         instructions: "You are a receipt parser. You will receive text translated from an image of a receipt and you will output each item and its price.",
-        model: "gpt-4-1106-preview"
+        model: "GPT-3.5-turbo-16k-0613"
       });
 
     const thread = await openai.beta.threads.create();
@@ -29,7 +31,7 @@ async function main() {
         run.id
       );
     const messages = await openai.beta.threads.messages.list(thread.id);
-    console.log(messages.data.content.text);
+    console.log(messages.data);
 
 }
 

@@ -1,3 +1,1 @@
 # SplitTheBill
-# cumungus
-# howdy

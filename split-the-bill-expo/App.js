@@ -10,11 +10,13 @@ import { uploadPhotoToServer } from './fileUpload';
 //import ImagePicker from 'react-native-image-crop-picker';
 
 
-export default function App() {
+function App() {
   let cameraRef = useRef();
   const [hasCameraPermission, setHasCameraPermission] = useState();
   const [hasMediaLibraryPermission, setHasMediaLibraryPermission] = useState();
   const [photo, setPhoto] = useState();
+
+  const [loading, setLoading] = useState()
 
   
   useEffect(() => {
@@ -42,11 +44,12 @@ export default function App() {
     let newPhoto = await cameraRef.current.takePictureAsync(options);
     
     setPhoto(newPhoto);
+    await uploadPhotoToServer(photo);
     
   };
 
   if (photo) {
-    uploadPhotoToServer(photo);
+    console.log('here1')
     
     let done = () => {
       //Allow functionality to send the picture to the server
@@ -92,3 +95,5 @@ const styles = StyleSheet.create({
     flex: 1
   }
 });
+
+export default App
