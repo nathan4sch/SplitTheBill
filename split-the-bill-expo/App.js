@@ -38,15 +38,16 @@ function App() {
 */
 
 
-const App = () => {
+/*const App = () => {
   return (
     <NavigationContainer>
       <CameraScreen />
     </NavigationContainer>
   );
 };
+*/
 
-/*
+
 function App() {
   let cameraRef = useRef();
   const [hasCameraPermission, setHasCameraPermission] = useState();
@@ -157,6 +158,6 @@ const styles = StyleSheet.create({
     flex: 1
   }
 });
-*/
+
 
 export default App
