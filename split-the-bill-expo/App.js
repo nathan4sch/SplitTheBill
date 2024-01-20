@@ -5,9 +5,31 @@ import { Camera } from 'expo-camera';
 import { shareAsync } from 'expo-sharing';
 import * as MediaLibrary from 'expo-media-library';
 import TransparentCircleButton from './TransparentCircleButton'; // Import your custom button component
-import { uploadPhotoToServer } from './fileUpload';
+import { uploadPhoto } from './fileUpload';
+
+//Navigation
+//import { NavigationContainer } from "@react-navigation/native";
+//import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
 
 //import ImagePicker from 'react-native-image-crop-picker';
+
+/*
+const Stack = createNativeStackNavigator();
+
+function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen 
+          name="camera"
+          component={cameraScreen}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
+*/
 
 
 function App() {
@@ -40,12 +62,36 @@ function App() {
       base64: true,
       exif: false,
     };
-
-    let newPhoto = await cameraRef.current.takePictureAsync(options);
+  
+    try {
+      // Take a picture and get the result asynchronously
+      const newPhoto = await cameraRef.current.takePictureAsync(options);
+      const photoUri = newPhoto.uri;
+      try {
+        // Convert the local file URI to a blob
+        const photoBlob = await fetch(photoUri).then((response) => response.blob());
     
-    setPhoto(newPhoto);
-    await uploadPhotoToServer(photo);
+        // Create FormData object to append the blob data
+        const formData = new FormData();
+        formData.append('photo', photoBlob, 'photo.jpg');
     
+        // Make a POST request to your backend
+        const response = await fetch('http://127.0.0.1:3000/upload', {
+          method: 'POST',
+          body: formData,
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+      } catch (error) {
+        console.error('Error uploading photo:', error);
+        // Handle other errors here
+      }
+      setPhoto(newPhoto);
+    } catch (error) {
+      console.error('Error taking or uploading photo:', error);
+      // Handle the error appropriately, e.g., show an error message to the user
+    }
   };
 
   if (photo) {
@@ -78,6 +124,7 @@ function App() {
     </Camera>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {
