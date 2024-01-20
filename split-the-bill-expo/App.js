@@ -6,6 +6,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 //Screen
 import CameraScreen from "./Screens/CameraScreen";
 import LoadingScreen from "./Screens/LoadingScreen";
+import ResultsScreen from "./Screens/ResultsScreen";
 
 
 
@@ -23,6 +24,10 @@ function App() {
         <Stack.Screen 
           name="LoadingScreen"
           component={LoadingScreen}
+        />
+        <Stack.Screen 
+          name="ResultsScreen"
+          component={ResultsScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>

@@ -3,6 +3,7 @@ import { Camera } from 'expo-camera';
 import { StyleSheet, Text, View, SafeAreaView, Button, Image } from 'react-native';
 //import { uploadPhotoToServer } from './fileUpload';
 import TransparentCircleButton from '../Components/TransparentCircleButton';
+import ResultsScreen from './ResultsScreen';
 
 const CameraScreen = ({navigation}) => {
   let cameraRef = useRef();
@@ -39,11 +40,16 @@ const CameraScreen = ({navigation}) => {
       });
     };
 
+    let results = () => {
+      navigation.navigate(ResultsScreen)
+    }
+
     return (
       <SafeAreaView style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <Image style={{ alignSelf: 'stretch', flex: 1 }} source={{ uri: "data:image/jpg;base64," + photo.base64 }} />
         <Button title="Discard" onPress={() => setPhoto(undefined)} />
         <Button title="Done" onPress={done} />
+        <Button title="Results Test" onPress={results} />
       </SafeAreaView>
     );
   }
