@@ -1,26 +1,13 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, SafeAreaView, Button, Image } from 'react-native';
-import { useEffect, useRef, useState } from 'react';
-import { Camera } from 'expo-camera';
-import { shareAsync } from 'expo-sharing';
-import * as MediaLibrary from 'expo-media-library';
-import TransparentCircleButton from './TransparentCircleButton'; // Import your custom button component
-import { uploadPhoto } from './fileUpload';
-
 //Navigation
-//import { NavigationContainer } from "@react-navigation/native";
-//import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-
-//Navigation
-import { NavigationContainer } from '@react-navigation/native';
 
 //Screen
-import CameraScreen from "./Screens/cameraScreen.js";
+import CameraScreen from "./Screens/CameraScreen";
+import LoadingScreen from "./Screens/LoadingScreen";
 
-//import ImagePicker from 'react-native-image-crop-picker';
 
-/*
 const Stack = createNativeStackNavigator();
 
 function App() {
@@ -28,26 +15,21 @@ function App() {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen 
-          name="camera"
-          component={cameraScreen}
+          name="Scan Receipt"
+          component={CameraScreen}
+          options={{ headerLeft: null }} // Hide back button on CameraScreen
+        />
+        <Stack.Screen 
+          name="LoadingScreen"
+          component={LoadingScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
-*/
 
 
-/*const App = () => {
-  return (
-    <NavigationContainer>
-      <CameraScreen />
-    </NavigationContainer>
-  );
-};
-*/
-
-
+/*
 function App() {
   let cameraRef = useRef();
   const [hasCameraPermission, setHasCameraPermission] = useState();
@@ -140,24 +122,7 @@ function App() {
     </Camera>
   );
 }
-
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  buttonContainer: {
-    backgroundColor: '#fff',
-    alignSelf: 'flex-end',
-    marginVertical: 20,
-  },
-  preview: {
-    alignSelf: 'stretch',
-    flex: 1
-  }
-});
+*/
 
 
 export default App

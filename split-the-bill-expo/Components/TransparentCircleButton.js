@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 0.7)', // Semi-transparent white
     borderRadius: 30, // Make it circular
     padding: 15,
-    top: '400%',
+    top: '800%',
   },
 });
 

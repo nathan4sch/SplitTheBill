@@ -1,25 +1,30 @@
-import React from 'react';
-import { ActivityIndicator, StyleSheet, View } from 'react-native';
 
-const ActivityIndicatorComponent = () => (
-  <View style={[styles.container, styles.horizontal]}>
-    <ActivityIndicator />
-    <ActivityIndicator size="large" />
-    <ActivityIndicator size="small" color="#0000ff" />
-    <ActivityIndicator size="large" color="#00ff00" />
-  </View>
-);
+import React from 'react';
+import { ActivityIndicator, StyleSheet, View, Text } from 'react-native';
+
+const LoadingScreen = ({ navigation }) => {
+  // Disable back navigation when the component is focused
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.loadingText}>Loading</Text>
+      <ActivityIndicator size="large" color="#ff4500" />
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#f5f5f5',
   },
-  horizontal: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    padding: 10,
+  loadingText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 20,
   },
 });
 
-export default ActivityIndicatorComponent;
+export default LoadingScreen;
