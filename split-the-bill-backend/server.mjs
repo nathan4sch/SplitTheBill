@@ -15,6 +15,7 @@ const server = http.createServer(async (req, res) => {
     res.end(String(err));
     return;
   }
+  console.log("File Found")
   res.writeHead(200, {'Content-Type': 'application/json'});
   res.end(JSON.stringify({ fields, files }, null, 2));
 });

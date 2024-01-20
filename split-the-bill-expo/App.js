@@ -12,6 +12,12 @@ import { uploadPhoto } from './fileUpload';
 //import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 
+//Navigation
+import { NavigationContainer } from '@react-navigation/native';
+
+//Screen
+import CameraScreen from "./Screens/cameraScreen.js";
+
 //import ImagePicker from 'react-native-image-crop-picker';
 
 /*
@@ -32,6 +38,15 @@ function App() {
 */
 
 
+const App = () => {
+  return (
+    <NavigationContainer>
+      <CameraScreen />
+    </NavigationContainer>
+  );
+};
+
+/*
 function App() {
   let cameraRef = useRef();
   const [hasCameraPermission, setHasCameraPermission] = useState();
@@ -142,5 +157,6 @@ const styles = StyleSheet.create({
     flex: 1
   }
 });
+*/
 
 export default App
