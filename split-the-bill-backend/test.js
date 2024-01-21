@@ -16,7 +16,7 @@ async function receive_data() {
         messages: [
             {
                 role: "system",
-                content: "You are a receipt parser. You will receive text translated from an image of a receipt and you will output each item and its price in JSON format.",
+                content: "You are a receipt parser. You will receive text translated from an image of a receipt and you will output each item and its price in JSON format, where the item name is represented by 'name' and the price is represented by 'price'. Also include a '$' before the price value.",
             },
             { role: "user", content: text },
         ],
