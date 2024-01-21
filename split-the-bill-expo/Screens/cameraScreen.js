@@ -1,15 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Camera } from 'expo-camera';
 import { StyleSheet, Text, View, SafeAreaView, Button, Image } from 'react-native';
-//import { uploadPhotoToServer } from './fileUpload';
 import TransparentCircleButton from '../Components/TransparentCircleButton';
 import ResultsScreen from './ResultsScreen';
 import ItemScreen from "./ItemScreen";
-import fs from 'node:fs';
 import FormData from 'form-data';
 import axios from 'axios';
-
-const CameraScreen = ({navigation}) => {
+import { readFile } from 'react-native-fs';
+0
+const CameraScreen = ({route, navigation}) => {
+    const { personList } = route.params;
   let cameraRef = useRef();
   const [hasCameraPermission, setHasCameraPermission] = useState();
   const [photo, setPhoto] = useState();
@@ -27,27 +27,22 @@ const CameraScreen = ({navigation}) => {
       base64: true,
       exif: false,
     };
-
-    const newPhoto = await cameraRef.current.takePictureAsync(options);
+      const newPhoto = await cameraRef.current.takePictureAsync(options);
       const photoUri = newPhoto.uri;
       try {
-        const fileStream = fs.createReadStream(photoUri);
-        const formData = new FormData();
-        formData.append('title', 'Receipt');
-        formData.append('multipleFiles', fileStream);
+        let body = new FormData();
+        body.append('photo', {uri: imagePath,name: 'photo.png',filename :'imageName.png',type: 'image/png'});
+        body.append('Content-Type', 'image/png');
 
-        axios.post(apiUrl, formData, {
-          headers: {
-            ...formData.getHeaders(),
-          },
-        })
-          .then(response => {
-            console.log('API Response:', response.data);
-          })
-          .catch(error => {
-            console.error('Error making API request:', error.message);
-          });
-        
+        fetch(Url,{ method: 'POST',headers:{  
+            "Content-Type": "multipart/form-data",
+            "otherHeader": "foo",
+            } , body :body} )
+          .then((res) => checkStatus(res))
+          .then((res) => res.json())
+          .then((res) => { console.log("response" +JSON.stringify(res)); })
+          .catch((e) => console.log(e))
+          .done()
       } catch (error) {
         console.error('Error uploading photo:', error);
         // Handle other errors here
