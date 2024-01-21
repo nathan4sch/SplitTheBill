@@ -1,56 +1,4 @@
 
-// import React from 'react';
-// import { ActivityIndicator, StyleSheet, View, Text } from 'react-native';
-
-// const LoadingScreen = ({ navigation }) => {
-//   // Disable back navigation when the component is focused
-
-//   /*
-// return (
-//     <ImageBackground
-//       source={require('../assets/background.jpg')} // Make sure to provide the correct path to your image
-//       style={styles.backgroundImage}
-//     >
-//       <View style={styles.container}>
-//         <Text style={styles.loadingText}>Loading</Text>
-//         <ActivityIndicator size="large" color="#ff4500" />
-//       </View>
-//     </ImageBackground>
-//   );
-//   */
-//   return (
-//     <View style={styles.container}>
-//       <Text style={styles.loadingText}>Loading</Text>
-//       <ActivityIndicator size="large" color="#ffffff" />
-//     </View>
-//   );
-// };
-
-// const styles = StyleSheet.create({
-//   /*
-// backgroundImage: {
-//     flex: 1,
-//     resizeMode: 'cover', // or 'stretch' depending on your preference
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//   },
-//   */
-//   container: {
-//     flex: 1,
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//     backgroundColor: '#4c5057',
-//   },
-//   loadingText: {
-//     fontSize: 18,
-//     fontWeight: 'bold',
-//     marginBottom: 20,
-//     color: '#ffffff',
-//   },
-// });
-
-// export default LoadingScreen;
-
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, StyleSheet, View, Text } from 'react-native';
 import FormData from 'form-data';
@@ -61,9 +9,8 @@ import ItemScreen from './ItemScreen';
 
 const LoadingScreen = ({ route, navigation }) => {
   //console.log("TESTINGINGINGSINGISNG");
-  let { photo, itemList, updateItems } = route.params;
+  let { photo, itemList, updateItems, personList } = route.params;
   //console.log(itemList);
-  const [isLoading, setIsLoading] = useState(true);
   const uploadUrl = 'http://3.16.203.58:3000/api/upload';
 
   const uploadPhoto = async () => {
@@ -92,14 +39,24 @@ const LoadingScreen = ({ route, navigation }) => {
   
       // Call updateData to send the updated personList back to the App component
       updateItems(itemList);
+      
+      console.log("In loading:");
+      console.log(itemList);
 
-      navigation.navigate(ItemScreen);
+      navigation.reset({
+        index: 1,
+        routes: [
+          {
+            name: 'ItemScreen',
+            params: { itemList, personList }
+          },
+        ],
+      });
     } catch (error) {
       console.error('Error:', error);
     }
 
     // Update loading state after completing the upload
-    setIsLoading(false);
   };
   //Immediately invoke the internal asynchronous function
   useEffect(() => {

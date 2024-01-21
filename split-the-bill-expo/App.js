@@ -18,7 +18,7 @@ function App() {
     setData(newData);
   };
 
-  const [itemList, setItems] = useState([]);
+  let [itemList, setItems] = useState([]);
   const updateItems = newData => {
     setItems(newData);
   };
@@ -45,7 +45,7 @@ function App() {
         <Stack.Screen 
           name="ItemScreen"
           component={ItemScreen}
-          initialParams={{ personList: personList, updateData: updateData, itemList: itemList, updateItems: updateItems }}
+          //initialParams={{ personList: personList, updateData: updateData, itemList: itemList, updateItems: updateItems }}
         />
       </Stack.Navigator>
     </NavigationContainer>

@@ -9,28 +9,39 @@ import Dropdown from '../Components/Dropdown';
 import Person from '../Components/Person';
 import { CheckBox } from "react-native-btr";
 
-function ItemScreen({ route }) {
+const ItemScreen = ({route, navigation}) => {
+  let { itemList, personList } = route.params;
+  console.log("In Item:");
+      console.log(itemList);
 
   const [inputText, setInputText] = useState('');
 
   //Dropdown
-  const [selectedPerson, setSelected] = useState();
+  const [selectedPerson, setSelected] = useState(null);
   const updateSelected = newData => {
     console.log(newData);
     setSelected(newData);
   };
   //Dropdown end
 
-  const { personList, updateData, itemList, updateItems } = route.params; 
   //console.log(itemList);
 
   const addNewPerson = () => {
     const newPerson = Person.createPerson(inputText, itemList.length);
     console.log(newPerson);
-    const updatedPersonList = [...personList, newPerson];
+    personList = [...personList, newPerson];
+    navigation.reset({
+      index: 1,
+      routes: [
+        {
+          name: 'ItemScreen',
+          params: { itemList, personList }
+        },
+      ],
+    });
 
     // Call updateData to send the updated personList back to the App component
-    updateData(updatedPersonList);
+    //updateData(updatedPersonList);
     setInputText('');
   };
 
@@ -50,8 +61,8 @@ function ItemScreen({ route }) {
       <StatusBar style="auto" />
     </View>
     
-    {itemList.map((item, index) => (
-      <Item key={index} user={item} />
+    {selectedPerson && itemList.map((item, index) => (
+      <Item key={index} user={item} person={selectedPerson}/>
     ))}
 
     </View>
