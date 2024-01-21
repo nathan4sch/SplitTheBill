@@ -32,7 +32,7 @@ function App() {
       <Stack.Navigator 
       // This removes the navigation page header
       screenOptions={{
-        //headerShown: false
+        headerShown: false
       }}
       >
         <Stack.Screen 

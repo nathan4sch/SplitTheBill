@@ -63,12 +63,16 @@ const ItemScreen = ({route, navigation}) => {
   };
 
   return (
+    
     <View style = {styles.topContainer}>
+    <View style={styles.spacer} />  
     <View style={styles.container}>
       <Dropdown personList={personList} selectedPerson={selectedPerson} updateSelected={updateSelected} navigation={navigation} itemList={{itemList}}/>
       <TextInput
         style={styles.textInput}
-        placeholder="Enter Name"
+        placeholder="Add New Person"
+        placeholderTextColor={color = '#888888'}
+        
         value={inputText}
         onChangeText={(text) => setInputText(text)}
       />
@@ -95,6 +99,11 @@ const ItemScreen = ({route, navigation}) => {
 //<Item name = "Orange" price="3.40"/>
 
 const styles = StyleSheet.create({
+  spacer: {
+    flex: 0.06, // This will allow the spacer to take up 10% of the topContainer's height
+    backgroundColor: 'transparent', // Set to 'transparent' or any color you wish
+  },
+
   topContainer: {
     flexDirection: 'column',
     flex: 1,
@@ -105,6 +114,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
+    padding: 10,
     justifyContent: 'top',
     backgroundColor: '#22272e',
     borderColor: '#00ffcc',
@@ -125,9 +135,10 @@ const styles = StyleSheet.create({
   },
   enterButton: {
     flex: 20,
-    backgroundColor: '#DDDDDD',
-    borderColor: '#DDDDDD',
+    backgroundColor: '#cccccc',
+    borderColor: '#cccccc',
     borderWidth: 1,
+    borderRadius: 50,
     padding: 10,
     alignItems: 'center',
     marginLeft: 10,
@@ -141,9 +152,10 @@ const styles = StyleSheet.create({
   },
   submitButton: {
     flex: 20, // same as enterButton
-    backgroundColor: '#DDDDDD',
-    borderColor: '#DDDDDD',
+    backgroundColor: '#cccccc',
+    borderColor: '#cccccc',
     borderWidth: 2,
+    borderRadius: 10,
     padding: 10,
     alignItems: 'center',
     marginLeft: 50,

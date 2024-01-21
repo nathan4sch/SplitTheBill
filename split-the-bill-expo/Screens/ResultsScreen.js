@@ -18,6 +18,7 @@ const ResultsScreen = ({ route }) => {
 
   return (
     <View style={styles.container}>
+       <View style={styles.spacer} />  
       <Text style={styles.title}>Results</Text>
       <View style={styles.columnTitles}>
         <View style={styles.nameColumn}>
@@ -39,6 +40,10 @@ const ResultsScreen = ({ route }) => {
 const screenWidth = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
+  spacer: {
+    flex: 0.06, // This will allow the spacer to take up 10% of the topContainer's height
+    backgroundColor: 'transparent', // Set to 'transparent' or any color you wish
+  },
   container: {
     flex: 1,
     padding: 16,

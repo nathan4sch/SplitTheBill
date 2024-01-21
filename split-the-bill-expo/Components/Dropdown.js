@@ -61,6 +61,7 @@ const styles = StyleSheet.create({
     color: '#e6e6e6',
     padding: 10,
     marginBottom: 10,
+    borderRadius: 10,
   },
   selectedValue: {
     marginTop: 10,

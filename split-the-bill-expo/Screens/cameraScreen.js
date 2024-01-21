@@ -86,14 +86,14 @@ const CameraScreen = ({route, navigation}) => {
       <SafeAreaView style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <Image style={{ alignSelf: 'stretch', flex: 1 }} source={{ uri: "data:image/jpg;base64," + photo.base64 }} />
         <Button title="Discard" onPress={() => setPhoto(undefined)} />
-        <Button title="Done" onPress={done} />
+        <Button title="Use Photo" onPress={done} />
       </SafeAreaView>
     );
   }
 
   return (
-    <Camera style={{ flex: 1 }} ref={cameraRef}  zoom={0.0}>
-      <View style={{ backgroundColor: '#fff', alignSelf: 'flex-end', marginVertical: 20 }}>
+    <Camera style={{ flex: 1 }} ref={cameraRef} type={Camera.Constants.Type.back} autoFocus={Camera.Constants.AutoFocus.on} zoom={0.0}>
+      <View style={{ backgroundColor: '#fff', alignSelf: 'flex-end', marginVertical: 100 }}>
         <TransparentCircleButton title="Take Pic" onPress={takePic} />
       </View>
     </Camera>
