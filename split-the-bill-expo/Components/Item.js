@@ -1,39 +1,25 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { CheckBox } from "react-native-btr";
-{/*
-const Item = {
-  createItem: (name,price) => {
-    return { 
-      name: name || 'New Item', 
-      price: price || '0.0', 
-      count: '0'
-    };
-  }
-
-};
-*/}
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
 function Item(props) {
-  const [count, setCount] = useState(0);
   const item = props.user;
-  
-  //console.log(item);
 
-  function toggle(event) {
-    //check state of check button and update count
-    setCount((prevCount) => (prevCount === 0 ? 1 : 0));
-    console.log(count);
-  }
+  const [isPressed, setIsPressed] = useState(false);
+
+  const handlePress = () => {
+    setIsPressed(!isPressed);
+  };
+
+  const buttonColor = isPressed ? 'green' : 'white';
+  const borderColor = 'black';
 
   return (
     <View style={styles.container}>
       {/* Left section with checkbox */}
-      
       <View style={styles.checkboxSection}>
-        <CheckBox
-          value={count === 1}
-          onValueChange={toggle}
+        <TouchableOpacity
+          style={[styles.circularButton, { backgroundColor: buttonColor, borderColor: borderColor }]}
+          onPress={handlePress}
         />
       </View>
 
@@ -41,15 +27,14 @@ function Item(props) {
       <View style={styles.textSection}>
         <Text>{item.name}</Text>
       </View>
-      {/* Right section with text*/ }
+
+      {/* Right section with text*/}
       <View style={styles.textSection}>
         <Text>{item.price}</Text>
       </View>
       <View style={styles.textSection}>
         <Text>{item.count}</Text>
       </View>
-      
-      
     </View>
   );
 }
@@ -63,8 +48,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   checkboxSection: {
-    flex: 1,
     alignItems: 'center',
+    justifyContent: 'center',
+  },
+  circularButton: {
+    width: 30,  // Adjusted width to make it smaller
+    height: 30, // Adjusted height to make it smaller
+    borderRadius: 15,
+    borderWidth: 2,
   },
   textSection: {
     flex: 2,

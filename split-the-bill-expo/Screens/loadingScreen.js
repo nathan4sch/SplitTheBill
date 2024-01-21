@@ -53,47 +53,61 @@
 
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, StyleSheet, View, Text } from 'react-native';
+import FormData from 'form-data';
 
-const LoadingScreen = ({ navigation }) => {
+import NewItem from '../Components/NewItem';
+
+
+const LoadingScreen = ({ route }) => {
+  const { photo } = route.params;
   const [isLoading, setIsLoading] = useState(true);
+  const uploadUrl = 'http://3.16.203.58:3000/api/upload';
 
+  const uploadPhoto = async () => {
+    const formData = new FormData();
+
+    formData.append('photo', {
+      uri: photo.uri,
+      type: 'image/jpeg',
+      name: 'photo.jpg',
+    });
+
+    try {
+      const response = await fetch(uploadUrl, {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      const data = await response.json();
+      console.log(data);
+      /*data.items.forEach(itemData => {
+        let newItem = NewItem.createItem(itemData.item, itemData.price);
+        itemList = [...itemList, newItem];
+      });
+  
+      // Call updateData to send the updated personList back to the App component
+      updateItems(itemList);*/
+
+      navigator.navigate('ItemScreen');
+    } catch (error) {
+      console.error('Error:', error);
+    }
+
+    // Update loading state after completing the upload
+    setIsLoading(false);
+  };
+  //Immediately invoke the internal asynchronous function
   useEffect(() => {
-    // Function to fetch data from the server
-    const fetchData = async () => {
-      try {
-        // Make a GET request to your server endpoint
-        const response = await fetch('http://3.16.203.58:3000/api/upload');
-        const data = await response.json();
-
-        // Assuming your data contains a condition to proceed to the next page
-        if (data !== null) {
-          // Navigate to the next page
-          navigation.navigate('ItemScreen');
-        } else {
-          // Set loading to false if the condition is not met
-          navigation.navigate('CameraScreen');
-        }
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        // Handle errors here, set loading to false or show an error message
-        setIsLoading(false);
-      }
-    };
-
-    // Call the fetchData function
-    fetchData();
-  }, [navigation]); // Make sure to include navigation as a dependency if it's used inside the effect
+    uploadPhoto();
+  }, []); // Empty dependency array to mimic componentDidMount behavior
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.loadingText}>Loading</Text>
-      {isLoading ? (
-        <ActivityIndicator size="large" color="#ffffff" />
-      ) : (
-        <Text>Data loaded, redirecting...</Text>
-        /* Optionally, you can display an error message if loading fails */
-      )}
-    </View>
+      <View style={styles.container}>
+        <Text style={styles.loadingText}>Loading</Text>
+        <ActivityIndicator size="large" color="#ff4500" />
+      </View>
   );
 };
 

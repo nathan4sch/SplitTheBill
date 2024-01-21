@@ -35,6 +35,7 @@ function App() {
         <Stack.Screen 
           name="LoadingScreen"
           component={LoadingScreen}
+          //initialParams={{ itemList: itemList, updateItems: updateItems }}
         />
         <Stack.Screen 
           name="ResultsScreen"

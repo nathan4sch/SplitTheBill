@@ -22,10 +22,11 @@ function ItemScreen({ route }) {
   //Dropdown end
 
   const { personList, updateData, itemList, updateItems } = route.params; 
-  console.log(itemList);
+  //console.log(itemList);
 
   const addNewPerson = () => {
-    const newPerson = Person.createPerson(inputText);
+    const newPerson = Person.createPerson(inputText, itemList.length);
+    console.log(newPerson);
     const updatedPersonList = [...personList, newPerson];
 
     // Call updateData to send the updated personList back to the App component

@@ -4,8 +4,7 @@ import { StyleSheet, Text, View, SafeAreaView, Button, Image } from 'react-nativ
 import TransparentCircleButton from '../Components/TransparentCircleButton';
 import ResultsScreen from './ResultsScreen';
 import ItemScreen from "./ItemScreen";
-import FormData from 'form-data';
-import axios from 'axios';
+import LoadingScreen from './LoadingScreen';
 
 import jsonData from '../example.json';
 
@@ -37,63 +36,41 @@ const CameraScreen = ({route, navigation}) => {
   };
 
   if (photo) {
+    let JSONtest = () => {
+      jsonData.items.forEach(itemData => {
+        let newItem = NewItem.createItem(itemData.item, itemData.price);
+        itemList = [...itemList, newItem];
+      });
+  
+      // Call updateData to send the updated personList back to the App component
+      updateItems(itemList);
+      itemScreen();
+    }
     let done = () => {
       // Allow functionality to send the picture to the server
       // await response
       // then go to another screen
-      const uploadUrl = 'http://3.16.203.58:3000/api/upload';
-    const formData = new FormData();
-
-    // parse json testing
-    
-
-    // Append the image data to FormData
-    formData.append('photo', {
-      uri: photo.uri,
-      type: 'image/jpeg', // Adjust the content type based on your requirements
-      name: 'photo.jpg',
-    });
-      try {
-        fetch(uploadUrl, {
-          method: 'POST',
-          body: formData,
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        })
-          .then(response => response.json())
-          .then(data => {
-            console.log('Response:', data);
-          })
-          .catch(error => {
-            console.error('Error:', error);
-          });
-      } catch (error) {
-        console.error('Error uploading photo:', error);
-        // Handle other errors here
-      }
     
 
     //let newItem = NewItem.createItem("Name", "price");
     //let updatedItemList = [...itemList, newItem];
     //itemList = updatedItemList;
 
-
+    navigation.reset({
+      index: 1,
+      routes: [
+        {
+          name: 'LoadingScreen',
+          params: { photo },
+        },
+      ],
+    });
     //AFTER LOADING
 
-    jsonData.items.forEach(itemData => {
-      let newItem = NewItem.createItem(itemData.item, itemData.price);
-      itemList = [...itemList, newItem];
-    });
-
-    // Call updateData to send the updated personList back to the App component
-    updateItems(itemList);
-    //console.log("3 " + itemList);
-      
-    itemScreen();
+    
       //navigation.reset({
-      //  index: 0,
-      //  routes: [{ name: 'ItemScreen' }],
+      //  index: 1,
+      //  routes: [{ name: 'LoadingScreen' }],
       //});
     };
 
@@ -112,6 +89,7 @@ const CameraScreen = ({route, navigation}) => {
         <Button title="Done" onPress={done} />
         <Button title="Results Test" onPress={results} />
         <Button title="Item Test" onPress={itemScreen} />
+        <Button title="JSON Test" onPress={JSONtest} />
       </SafeAreaView>
     );
   }
