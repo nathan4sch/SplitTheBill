@@ -7,8 +7,13 @@ import ItemScreen from "./ItemScreen";
 import FormData from 'form-data';
 import axios from 'axios';
 
+import jsonData from '../example.json';
+
+import NewItem from '../Components/NewItem';
+
+
 const CameraScreen = ({route, navigation}) => {
-    const { personList } = route.params;
+  let { personList, itemList, updateItems } = route.params;
   let cameraRef = useRef();
   const [hasCameraPermission, setHasCameraPermission] = useState();
   const [photo, setPhoto] = useState();
@@ -26,13 +31,25 @@ const CameraScreen = ({route, navigation}) => {
       base64: true,
       exif: false,
     };
-      const newPhoto = await cameraRef.current.takePictureAsync(options);
-      const uploadUrl = 'http://18.189.180.149:3000/api/upload';
-      const formData = new FormData();
+    const newPhoto = await cameraRef.current.takePictureAsync(options);
+      setPhoto(newPhoto);
+    //await uploadPhotoToServer(photo);
+  };
+
+  if (photo) {
+    let done = () => {
+      // Allow functionality to send the picture to the server
+      // await response
+      // then go to another screen
+      const uploadUrl = 'http://3.16.203.58:3000/api/upload';
+    const formData = new FormData();
+
+    // parse json testing
+    
 
     // Append the image data to FormData
     formData.append('photo', {
-      uri: newPhoto.uri,
+      uri: photo.uri,
       type: 'image/jpeg', // Adjust the content type based on your requirements
       name: 'photo.jpg',
     });
@@ -55,19 +72,29 @@ const CameraScreen = ({route, navigation}) => {
         console.error('Error uploading photo:', error);
         // Handle other errors here
       }
-      setPhoto(newPhoto);
-    //await uploadPhotoToServer(photo);
-  };
+    
 
-  if (photo) {
-    let done = () => {
-      // Allow functionality to send the picture to the server
-      // await response
-      // then go to another screen
-      navigation.reset({
-        index: 0,
-        routes: [{ name: 'LoadingScreen' }],
-      });
+    //let newItem = NewItem.createItem("Name", "price");
+    //let updatedItemList = [...itemList, newItem];
+    //itemList = updatedItemList;
+
+
+    //AFTER LOADING
+
+    jsonData.items.forEach(itemData => {
+      let newItem = NewItem.createItem(itemData.item, itemData.price);
+      itemList = [...itemList, newItem];
+    });
+
+    // Call updateData to send the updated personList back to the App component
+    updateItems(itemList);
+    //console.log("3 " + itemList);
+      
+    itemScreen();
+      //navigation.reset({
+      //  index: 0,
+      //  routes: [{ name: 'ItemScreen' }],
+      //});
     };
 
     let results = () => {
@@ -90,7 +117,7 @@ const CameraScreen = ({route, navigation}) => {
   }
 
   return (
-    <Camera style={{ flex: 1 }} ref={cameraRef}>
+    <Camera style={{ flex: 1 }} ref={cameraRef}  zoom={0.0}>
       <View style={{ backgroundColor: '#fff', alignSelf: 'flex-end', marginVertical: 20 }}>
         <TransparentCircleButton title="Take Pic" onPress={takePic} />
       </View>

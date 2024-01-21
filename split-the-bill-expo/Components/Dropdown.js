@@ -1,21 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const Dropdown = ({personList}) => {
-  const [selectedValue, setSelectedValue] = useState(null);
+const Dropdown = ({ personList, selectedPerson, updateSelected }) => {
+  const [selectedValue, setSelectedValue] = useState(selectedPerson);
+
+  /*useEffect(() => {
+    // Update the selected value when the prop changes
+    setSelectedValue(selectedPerson);
+  }, [selectedPerson]);
+  */
 
   const options = personList.map((person) => ({
     label: person.name,
     value: person.name,
   }));
 
+  const handleValueChange = (value) => {
+    setSelectedValue(value);
+    updateSelected(value); // Notify parent component about the change
+  };
+
   return (
     <View style={styles.container}>
       <RNPickerSelect
         items={options}
-        onValueChange={(value) => setSelectedValue(value)}
+        onValueChange={handleValueChange}
         style={{
           inputAndroid: styles.selectButton,
           inputIOS: styles.selectButton,
@@ -24,8 +34,8 @@ const Dropdown = ({personList}) => {
           },
         }}
         value={selectedValue}
-        placeholder={{ label: 'Select Person', value: null }}      
-        />
+        placeholder={{ label: 'Select Person', value: null }}
+      />
     </View>
   );
 };

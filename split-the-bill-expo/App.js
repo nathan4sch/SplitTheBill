@@ -14,9 +14,13 @@ const Stack = createNativeStackNavigator();
 
 function App() {
   const [personList, setData] = useState([]);
-
   const updateData = newData => {
     setData(newData);
+  };
+
+  const [itemList, setItems] = useState([]);
+  const updateItems = newData => {
+    setItems(newData);
   };
 
   return (
@@ -26,7 +30,7 @@ function App() {
           name="Scan Receipt"
           component={CameraScreen}
           options={{ headerLeft: null }} // Hide back button on CameraScreen
-          initialParams={{ personList: personList }}
+          initialParams={{ personList: personList, itemList: itemList, updateItems: updateItems }}
         />
         <Stack.Screen 
           name="LoadingScreen"
@@ -35,12 +39,12 @@ function App() {
         <Stack.Screen 
           name="ResultsScreen"
           component={ResultsScreen}
-          initialParams={{ personList: personList }}
+          initialParams={{ personList: personList, updateData: updateData }}
         />
         <Stack.Screen 
           name="ItemScreen"
           component={ItemScreen}
-          initialParams={{ personList: personList, updateData: updateData }}
+          initialParams={{ personList: personList, updateData: updateData, itemList: itemList, updateItems: updateItems }}
         />
       </Stack.Navigator>
     </NavigationContainer>

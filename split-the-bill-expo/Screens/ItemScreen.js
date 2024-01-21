@@ -1,40 +1,42 @@
 // ItemScreen.js
+//The personList itself is not modified. If I attempt to add two people only the most recent is stored.
+//need to rerender and update the personList after each modification is made
 
 import React, { useState, useEffect } from 'react';
 import { StatusBar, ScrollView, TextInput, TouchableOpacity, StyleSheet, Text, View, FlatList } from 'react-native';
 import Item from '../Components/Item';
 import Dropdown from '../Components/Dropdown';
 import Person from '../Components/Person';
+import { CheckBox } from "react-native-btr";
 
 function ItemScreen({ route }) {
+
   const [inputText, setInputText] = useState('');
-  //const [data, setData] = useState([]);
-  //set the state for selected dropdown item here
-  const { personList, updateData } = route.params; 
 
-  let counter = 0;
-  const [update, setUpdate] = useState([]);
-  useEffect(() => {
-    setUpdate(counter);
-  }, [counter]);
-  
+  //Dropdown
+  const [selectedPerson, setSelected] = useState();
+  const updateSelected = newData => {
+    console.log(newData);
+    setSelected(newData);
+  };
+  //Dropdown end
 
+  const { personList, updateData, itemList, updateItems } = route.params; 
+  console.log(itemList);
 
   const addNewPerson = () => {
-    const newPerson = Person.createPerson(inputText); // Assuming createPerson returns a new person object
+    const newPerson = Person.createPerson(inputText);
     const updatedPersonList = [...personList, newPerson];
-    counter = counter + 1;
 
     // Call updateData to send the updated personList back to the App component
     updateData(updatedPersonList);
-
     setInputText('');
   };
 
   return (
     <View style = {styles.topContainer}>
     <View style={styles.container}>
-    <Dropdown personList={personList} />
+      <Dropdown personList={personList} selectedPerson={selectedPerson} updateSelected={updateSelected} />
       <TextInput
         style={styles.textInput}
         placeholder="Enter Name"
@@ -46,10 +48,16 @@ function ItemScreen({ route }) {
       </TouchableOpacity>
       <StatusBar style="auto" />
     </View>
-    <Item/>
+    
+    {itemList.map((item, index) => (
+      <Item key={index} user={item} />
+    ))}
+
     </View>
   );
 }
+
+//<Item name = "Orange" price="3.40"/>
 
 const styles = StyleSheet.create({
   topContainer: {
@@ -83,6 +91,11 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginRight: 10,
     height: 40,
+  },
+  checkboxContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: 5,
   },
 });
 
