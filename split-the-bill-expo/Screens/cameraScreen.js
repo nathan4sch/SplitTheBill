@@ -61,7 +61,7 @@ const CameraScreen = ({route, navigation}) => {
       routes: [
         {
           name: 'LoadingScreen',
-          params: { photo },
+          params: { photo , itemList, updateItems}
         },
       ],
     });

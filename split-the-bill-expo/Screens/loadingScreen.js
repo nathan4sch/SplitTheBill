@@ -56,10 +56,13 @@ import { ActivityIndicator, StyleSheet, View, Text } from 'react-native';
 import FormData from 'form-data';
 
 import NewItem from '../Components/NewItem';
+import ItemScreen from './ItemScreen';
 
 
-const LoadingScreen = ({ route }) => {
-  const { photo } = route.params;
+const LoadingScreen = ({ route, navigation }) => {
+  //console.log("TESTINGINGINGSINGISNG");
+  let { photo, itemList, updateItems } = route.params;
+  //console.log(itemList);
   const [isLoading, setIsLoading] = useState(true);
   const uploadUrl = 'http://3.16.203.58:3000/api/upload';
 
@@ -82,15 +85,15 @@ const LoadingScreen = ({ route }) => {
       });
       const data = await response.json();
       console.log(data);
-      /*data.items.forEach(itemData => {
+      data.items.forEach(itemData => {
         let newItem = NewItem.createItem(itemData.item, itemData.price);
         itemList = [...itemList, newItem];
       });
   
       // Call updateData to send the updated personList back to the App component
-      updateItems(itemList);*/
+      updateItems(itemList);
 
-      navigator.navigate('ItemScreen');
+      navigation.navigate(ItemScreen);
     } catch (error) {
       console.error('Error:', error);
     }
