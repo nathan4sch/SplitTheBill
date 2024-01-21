@@ -40,21 +40,23 @@ const ResultsScreen = ({ route }) => {
 const screenWidth = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
+  
   spacer: {
-    flex: 0.06, // This will allow the spacer to take up 10% of the topContainer's height
+    flex: 0.07, // This will allow the spacer to take up 10% of the topContainer's height
     backgroundColor: 'transparent', // Set to 'transparent' or any color you wish
   },
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: '#f7f7f7',
+    backgroundColor: '#22272e',
   },
   title: {
     fontSize: 48,
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 16,
-    color: '#333',
+    color: 'white',
+    
   },
   columnTitles: {
     flexDirection: 'row',
@@ -64,7 +66,7 @@ const styles = StyleSheet.create({
   columnTitle: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#333',
+    color: 'white',
   },
   item: {
     flexDirection: 'row',
@@ -72,6 +74,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#ddd',
     marginBottom: 16,
+    color: 'white',
   },
   nameColumn: {
     flex: 1,
@@ -83,7 +86,7 @@ const styles = StyleSheet.create({
   },
   itemText: {
     fontSize: 24,
-    color: '#333',
+    color: 'white',
   },
 });
 

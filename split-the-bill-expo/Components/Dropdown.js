@@ -5,11 +5,11 @@ import RNPickerSelect from 'react-native-picker-select';
 const Dropdown = ({ personList, selectedPerson, updateSelected, navigation, itemList }) => {
   const [selectedValue, setSelectedValue] = useState(selectedPerson);
 
-  /*useEffect(() => {
-    // Update the selected value when the prop changes
-    setSelectedValue(selectedPerson);
-  }, [selectedPerson]);
-  */
+  // useEffect(() => {
+  //   // Update the selected value when the prop changes
+  //   setSelectedValue(selectedPerson);
+  // }, [selectedPerson]);
+  
 
   const options = personList.map((person) => ({
     label: person.name,
@@ -19,15 +19,9 @@ const Dropdown = ({ personList, selectedPerson, updateSelected, navigation, item
   const handleValueChange = (value) => {
     setSelectedValue(value);
     updateSelected(value); // Notify parent component about the change
-    // navigation.reset({
-    //   index: 1,
-    //   routes: [
-    //     {
-    //       name: 'ItemScreen',
-    //       params: { itemList, personList }
-    //     },
-    //   ],
-    // });
+    console.log("Selected Person from Dropdown:");
+    console.log(selectedValue)
+    
   };
 
   return (
@@ -39,7 +33,7 @@ const Dropdown = ({ personList, selectedPerson, updateSelected, navigation, item
           inputAndroid: styles.selectButton,
           inputIOS: styles.selectButton,
           placeholder: {
-            color: 'white',
+            color: 'black',
           },
         }}
         value={selectedValue}
@@ -57,16 +51,17 @@ const styles = StyleSheet.create({
   },
   selectButton: {
     borderWidth: 1,
-    borderColor: '#00ffcc',
-    color: '#e6e6e6',
+    borderColor: '#EEEEEE',
+    backgroundColor: "#EEEEEE",
+    color: 'black',
     padding: 10,
     marginBottom: 10,
-    borderRadius: 10,
+    borderRadius: 50,
   },
   selectedValue: {
     marginTop: 10,
     textAlign: 'center',
-    color: '#e6e6e6',
+    color: 'black',
   },
 });
 

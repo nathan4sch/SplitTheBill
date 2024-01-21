@@ -31,7 +31,6 @@ const LoadingScreen = ({ route, navigation }) => {
         },
       });
       const data = await response.json();
-      console.log(data);
       data.items.forEach(itemData => {
         let newItem = NewItem.createItem(itemData.item, itemData.price);
         itemList = [...itemList, newItem];

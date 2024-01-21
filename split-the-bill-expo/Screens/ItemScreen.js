@@ -9,6 +9,8 @@ import Dropdown from '../Components/Dropdown';
 import Person from '../Components/Person';
 import { CheckBox } from "react-native-btr";
 
+
+
 const ItemScreen = ({route, navigation}) => {
   let { itemList, personList } = route.params;
   //console.log("In Item:");
@@ -27,8 +29,9 @@ const ItemScreen = ({route, navigation}) => {
     }
     console.log(newData);
     setSelected(newData);
+    console.log("Selected Person from ItemScreen:");
+    console.log(selectedPerson)
   };
-  //Dropdown end
 
   //console.log(itemList);
   const resultsScreen = () => {
@@ -65,30 +68,34 @@ const ItemScreen = ({route, navigation}) => {
   return (
     
     <View style = {styles.topContainer}>
-    <View style={styles.spacer} />  
-    <View style={styles.container}>
-      <Dropdown personList={personList} selectedPerson={selectedPerson} updateSelected={updateSelected} navigation={navigation} itemList={{itemList}}/>
-      <TextInput
-        style={styles.textInput}
-        placeholder="Add New Person"
-        placeholderTextColor={color = '#888888'}
-        
-        value={inputText}
-        onChangeText={(text) => setInputText(text)}
-      />
-      <TouchableOpacity onPress={addNewPerson} style={styles.enterButton}>
-        <Text>Enter</Text>
-      </TouchableOpacity>
-      <StatusBar style="auto" />
-    </View>
+      <View style={styles.spacer} />  
+      <View style={styles.container}>
+        <Dropdown personList={personList} selectedPerson={selectedPerson} updateSelected={updateSelected} navigation={navigation} itemList={{itemList}}/>
+        <TextInput
+          style={styles.textInput}
+          placeholder="Enter New Person"
+          placeholderTextColor={color = '#888888'}
+          textAlign='center'
+          
+          value={inputText}
+          onChangeText={(text) => setInputText(text)}
+        />
+        <TouchableOpacity onPress={addNewPerson} style={styles.enterButton}>
+          <Text>Add</Text>
+        </TouchableOpacity>
+        <StatusBar style="auto" />
+      </View>
     
-    {selectedPerson && itemList.map((item, index) => (
-      <Item key={index} user={item} person={selectedPerson}/>
-    ))}
-    <View style = {styles.bottomContainer}>
+     {selectedPerson && itemList.map((item, index) => (
+        <Item key={index} user={item} person={selectedPerson}/>
+      ))}
 
-    </View>
-    <TouchableOpacity onPress={resultsScreen} style={styles.submitButton}>
+
+
+      <View style = {styles.bottomContainer}>
+
+      </View>
+      <TouchableOpacity onPress={resultsScreen} style={styles.submitButton}>
         <Text>Submit →</Text>
       </TouchableOpacity>
     </View>
@@ -135,8 +142,8 @@ const styles = StyleSheet.create({
   },
   enterButton: {
     flex: 20,
-    backgroundColor: '#cccccc',
-    borderColor: '#cccccc',
+    backgroundColor: '#EEEEEE',
+    borderColor: '#EEEEEE',
     borderWidth: 1,
     borderRadius: 50,
     padding: 10,
@@ -152,8 +159,8 @@ const styles = StyleSheet.create({
   },
   submitButton: {
     flex: 20, // same as enterButton
-    backgroundColor: '#cccccc',
-    borderColor: '#cccccc',
+    backgroundColor: '#EEEEEE',
+    borderColor: '#EEEEEE',
     borderWidth: 2,
     borderRadius: 10,
     padding: 10,
