@@ -31,9 +31,10 @@ const LoadingScreen = ({ route, navigation }) => {
         },
       });
       const data = await response.json();
+      console.log(data);
       data.items.forEach(itemData => {
         console.log(itemData.name)
-        let newItem = NewItem.createItem(itemData.item, itemData.price);
+        let newItem = NewItem.createItem(itemData.name, itemData.price);
         itemList = [...itemList, newItem];
       });
   
