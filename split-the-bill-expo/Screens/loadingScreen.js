@@ -109,7 +109,7 @@ const LoadingScreen = ({ route, navigation }) => {
   return (
       <View style={styles.container}>
         <Text style={styles.loadingText}>Loading</Text>
-        <ActivityIndicator size="large" color="#ff4500" />
+        <ActivityIndicator size="large" color="#ffffff" />
       </View>
   );
 };
