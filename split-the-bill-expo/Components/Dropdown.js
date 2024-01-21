@@ -50,8 +50,8 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   selectButton: {
-    borderWidth: 1,
-    borderColor: '#EEEEEE',
+    borderWidth: 2,
+    borderColor: 'black',
     backgroundColor: "#EEEEEE",
     color: 'black',
     padding: 10,

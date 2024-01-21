@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     padding: 10,
     color: 'white',
-    backgroundColor: '#22272e',
+    backgroundColor: 'white',
   },
   checkboxSection: {
     alignItems: 'center',
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     width: 30,  // Adjusted width to make it smaller
     height: 30, // Adjusted height to make it smaller
     borderRadius: 15,
-    borderWidth: 0,
+    borderWidth: 2,
   },
   textSection: {
     flex: 2,

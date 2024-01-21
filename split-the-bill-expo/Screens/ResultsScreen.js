@@ -48,14 +48,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: '#22272e',
+    backgroundColor: 'white',
   },
   title: {
     fontSize: 48,
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 16,
-    color: 'white',
+    color: 'black',
     
   },
   columnTitles: {
@@ -66,15 +66,15 @@ const styles = StyleSheet.create({
   columnTitle: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: 'white',
+    color: 'black',
   },
   item: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
+    borderBottomColor: 'black',
     marginBottom: 16,
-    color: 'white',
+    color: 'black',
   },
   nameColumn: {
     flex: 1,
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
   },
   itemText: {
     fontSize: 24,
-    color: 'white',
+    color: 'black',
   },
 });
 
