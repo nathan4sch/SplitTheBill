@@ -3,8 +3,6 @@ import { View, Text, FlatList, StyleSheet, Dimensions } from 'react-native';
 
 const ResultsScreen = ({ route }) => {
   const { personList } = route.params;
-  console.log("test");
-  console.log(personList);
   const renderItem = ({ item }) => (
     <View style={styles.item}>
       <View style={styles.nameColumn}>

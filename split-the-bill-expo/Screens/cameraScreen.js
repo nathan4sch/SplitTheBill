@@ -6,8 +6,7 @@ import ResultsScreen from './ResultsScreen';
 import ItemScreen from "./ItemScreen";
 import FormData from 'form-data';
 import axios from 'axios';
-import { readFile } from 'react-native-fs';
-0
+
 const CameraScreen = ({route, navigation}) => {
     const { personList } = route.params;
   let cameraRef = useRef();
@@ -28,21 +27,30 @@ const CameraScreen = ({route, navigation}) => {
       exif: false,
     };
       const newPhoto = await cameraRef.current.takePictureAsync(options);
-      const photoUri = newPhoto.uri;
-      try {
-        let body = new FormData();
-        body.append('photo', {uri: imagePath,name: 'photo.png',filename :'imageName.png',type: 'image/png'});
-        body.append('Content-Type', 'image/png');
+      const uploadUrl = 'http://18.189.180.149:3000/api/upload';
+      const formData = new FormData();
 
-        fetch(Url,{ method: 'POST',headers:{  
-            "Content-Type": "multipart/form-data",
-            "otherHeader": "foo",
-            } , body :body} )
-          .then((res) => checkStatus(res))
-          .then((res) => res.json())
-          .then((res) => { console.log("response" +JSON.stringify(res)); })
-          .catch((e) => console.log(e))
-          .done()
+    // Append the image data to FormData
+    formData.append('photo', {
+      uri: newPhoto.uri,
+      type: 'image/jpeg', // Adjust the content type based on your requirements
+      name: 'photo.jpg',
+    });
+      try {
+        fetch(uploadUrl, {
+          method: 'POST',
+          body: formData,
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        })
+          .then(response => response.json())
+          .then(data => {
+            console.log('Response:', data);
+          })
+          .catch(error => {
+            console.error('Error:', error);
+          });
       } catch (error) {
         console.error('Error uploading photo:', error);
         // Handle other errors here

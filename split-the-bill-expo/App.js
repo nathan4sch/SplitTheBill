@@ -14,7 +14,6 @@ const Stack = createNativeStackNavigator();
 
 function App() {
   const [personList, setData] = useState([]);
-  console.log(personList);
 
   const updateData = newData => {
     setData(newData);
