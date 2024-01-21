@@ -6,23 +6,26 @@ import Item from '../Components/Item';
 import Dropdown from '../Components/Dropdown';
 import Person from '../Components/Person';
 
-function ItemScreen({ updatePeopleList }) {
+function ItemScreen({ route }) {
   const [inputText, setInputText] = useState('');
-  const [data, setData] = useState([]);
+  //const [data, setData] = useState([]);
+  const { personList, updateData } = route.params; 
+
 
   const addNewPerson = () => {
-    const newPerson = Person.createPerson(inputText); // Pass inputText as the name parameter
-    setData((prevData) => [...prevData, newPerson]);
-    setInputText('');
+    const newPerson = Person.createPerson(inputText); // Assuming createPerson returns a new person object
+    const updatedPersonList = [...personList, newPerson];
 
-    // Call the updatePeopleList function to update the list in ResultsScreen
-    updatePeopleList((prevPeopleList) => [...prevPeopleList, newPerson]);
+    // Call updateData to send the updated personList back to the App component
+    updateData(updatedPersonList);
+
+    setInputText('');
   };
 
   return (
     <View style = {styles.topContainer}>
     <View style={styles.container}>
-      <Dropdown />
+    <Dropdown personList={personList} />
       <TextInput
         style={styles.textInput}
         placeholder="Enter Name"

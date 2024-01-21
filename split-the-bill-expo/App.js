@@ -2,6 +2,7 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
+import React, { useState } from 'react';
 
 //Screen
 import CameraScreen from "./Screens/CameraScreen";
@@ -12,6 +13,13 @@ import ItemScreen from "./Screens/ItemScreen";
 const Stack = createNativeStackNavigator();
 
 function App() {
+  const [personList, setData] = useState([]);
+  console.log(personList);
+
+  const updateData = newData => {
+    setData(newData);
+  };
+
   return (
     <NavigationContainer>
       <Stack.Navigator>
@@ -19,6 +27,7 @@ function App() {
           name="Scan Receipt"
           component={CameraScreen}
           options={{ headerLeft: null }} // Hide back button on CameraScreen
+          initialParams={{ personList: personList }}
         />
         <Stack.Screen 
           name="LoadingScreen"
@@ -27,10 +36,12 @@ function App() {
         <Stack.Screen 
           name="ResultsScreen"
           component={ResultsScreen}
+          initialParams={{ personList: personList }}
         />
         <Stack.Screen 
           name="ItemScreen"
           component={ItemScreen}
+          initialParams={{ personList: personList, updateData: updateData }}
         />
       </Stack.Navigator>
     </NavigationContainer>

@@ -1,23 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text, FlatList, StyleSheet, Dimensions, Button } from 'react-native';
-import Person from '../Components/Person';
+import { View, Text, FlatList, StyleSheet, Dimensions } from 'react-native';
 
-/*const ResultsScreen = () => {
-    const [data, setData] = useState([
-        { name: 'Nathan', Total: 67.30 },
-        { name: 'Evan', Total: 45.60 },
-        { name: 'Nico', Total: 78.90 },
-        { name: 'Pj', Total: 12.30 },
-        { name: 'Kevin', Total: 45.60 },
-        { name: 'Tyler', Total: 78.90 },
-        { name: 'Andrew', Total: 45.60 },
-        { name: 'Logan', Total: 78.90 },
-        // Add more items as needed
-      ]);
-      */
-const ResultsScreen = ({ peopleList }) => {
-  const [data, setData] = useState(peopleList);
-
+const ResultsScreen = ({ route }) => {
+  const { personList } = route.params;
+  console.log("test");
+  console.log(personList);
   const renderItem = ({ item }) => (
     <View style={styles.item}>
       <View style={styles.nameColumn}>
@@ -41,7 +28,7 @@ const ResultsScreen = ({ peopleList }) => {
         </View>
       </View>
       <FlatList
-        data={data}
+        data={personList}
         renderItem={renderItem}
         keyExtractor={(item) => item.name}
       />

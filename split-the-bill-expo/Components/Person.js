@@ -10,6 +10,15 @@ const Person = {
   addItem: (person, newItem) => {
     // Add a new item to the person's items list
     person.items.push(newItem);
+  },
+  delItem: (person, delItem) => {
+    person.items.delete(delItem);
+  },
+  addTotal: (person, cost) => {
+    person.Total = person.Total + cost;
+  },
+  subTotal: (person, cost) => {
+    person.Total = person.Total - cost;
   }
 };
 

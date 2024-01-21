@@ -3,15 +3,13 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const Dropdown = () => {
+const Dropdown = ({personList}) => {
   const [selectedValue, setSelectedValue] = useState(null);
 
-  const options = [
-    { label: 'John', value: 'John' },
-    { label: 'Jane', value: 'Jane' },
-    { label: 'Doe', value: 'Doe' },
-    { label: 'Smith', value: 'Smith' },
-  ]; // Replace with your option list
+  const options = personList.map((person) => ({
+    label: person.name,
+    value: person.name,
+  }));
 
   return (
     <View style={styles.container}>
