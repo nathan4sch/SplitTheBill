@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 
-const Dropdown = ({ personList, selectedPerson, updateSelected }) => {
+const Dropdown = ({ personList, selectedPerson, updateSelected, navigation, itemList }) => {
   const [selectedValue, setSelectedValue] = useState(selectedPerson);
 
   /*useEffect(() => {
@@ -19,6 +19,15 @@ const Dropdown = ({ personList, selectedPerson, updateSelected }) => {
   const handleValueChange = (value) => {
     setSelectedValue(value);
     updateSelected(value); // Notify parent component about the change
+    // navigation.reset({
+    //   index: 1,
+    //   routes: [
+    //     {
+    //       name: 'ItemScreen',
+    //       params: { itemList, personList }
+    //     },
+    //   ],
+    // });
   };
 
   return (
@@ -30,7 +39,7 @@ const Dropdown = ({ personList, selectedPerson, updateSelected }) => {
           inputAndroid: styles.selectButton,
           inputIOS: styles.selectButton,
           placeholder: {
-            color: 'black',
+            color: 'white',
           },
         }}
         value={selectedValue}
@@ -48,13 +57,15 @@ const styles = StyleSheet.create({
   },
   selectButton: {
     borderWidth: 1,
-    borderColor: 'black',
+    borderColor: '#00ffcc',
+    color: '#e6e6e6',
     padding: 10,
     marginBottom: 10,
   },
   selectedValue: {
     marginTop: 10,
     textAlign: 'center',
+    color: '#e6e6e6',
   },
 });
 

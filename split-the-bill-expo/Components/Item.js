@@ -3,10 +3,20 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
 function Item(props) {
   const item = props.user;
+  let person = props.person;
 
-  const [isPressed, setIsPressed] = useState(false);
+  const [isPressed, setIsPressed] = useState(person.items.includes(item.name));
 
   const handlePress = () => {
+    let temp = item.price;
+    temp = temp[0] === '$' ? temp.substring(1) : temp;
+    if (isPressed) {
+      person.Total -= parseFloat(temp);
+      person.items.splice(person.items.indexOf(item.name), 1);
+    } else {
+      person.Total += parseFloat(temp);
+      person.items.push(item.name);
+    }
     setIsPressed(!isPressed);
   };
 

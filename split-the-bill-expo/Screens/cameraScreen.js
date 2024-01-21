@@ -87,9 +87,6 @@ const CameraScreen = ({route, navigation}) => {
         <Image style={{ alignSelf: 'stretch', flex: 1 }} source={{ uri: "data:image/jpg;base64," + photo.base64 }} />
         <Button title="Discard" onPress={() => setPhoto(undefined)} />
         <Button title="Done" onPress={done} />
-        <Button title="Results Test" onPress={results} />
-        <Button title="Item Test" onPress={itemScreen} />
-        <Button title="JSON Test" onPress={JSONtest} />
       </SafeAreaView>
     );
   }

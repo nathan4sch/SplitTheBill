@@ -40,8 +40,8 @@ const LoadingScreen = ({ route, navigation }) => {
       // Call updateData to send the updated personList back to the App component
       updateItems(itemList);
       
-      console.log("In loading:");
-      console.log(itemList);
+      //console.log("In loading:");
+      //console.log(itemList);
 
       navigation.reset({
         index: 1,
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#4c5057',
+    backgroundColor: '#22272e',
   },
   loadingText: {
     fontSize: 18,

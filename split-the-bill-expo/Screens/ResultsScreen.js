@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import { View, Text, FlatList, StyleSheet, Dimensions } from 'react-native';
 
 const ResultsScreen = ({ route }) => {
-  const { personList } = route.params;
+  const { itemList, personList } = route.params;
+   
+  
   const renderItem = ({ item }) => (
     <View style={styles.item}>
       <View style={styles.nameColumn}>

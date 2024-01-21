@@ -10,6 +10,10 @@ import LoadingScreen from "./Screens/LoadingScreen";
 import ResultsScreen from "./Screens/ResultsScreen";
 import ItemScreen from "./Screens/ItemScreen";
 
+// Disable yellow warning messages
+import { LogBox } from 'react-native';
+LogBox.ignoreAllLogs();
+
 const Stack = createNativeStackNavigator();
 
 function App() {
@@ -18,14 +22,19 @@ function App() {
     setData(newData);
   };
 
-  let [itemList, setItems] = useState([]);
+  const [itemList, setItems] = useState([]);
   const updateItems = newData => {
     setItems(newData);
   };
 
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator 
+      // This removes the navigation page header
+      screenOptions={{
+        //headerShown: false
+      }}
+      >
         <Stack.Screen 
           name="Scan Receipt"
           component={CameraScreen}
@@ -45,6 +54,7 @@ function App() {
         <Stack.Screen 
           name="ItemScreen"
           component={ItemScreen}
+          options={{ animation: 'none' }}
           //initialParams={{ personList: personList, updateData: updateData, itemList: itemList, updateItems: updateItems }}
         />
       </Stack.Navigator>

@@ -11,23 +11,40 @@ import { CheckBox } from "react-native-btr";
 
 const ItemScreen = ({route, navigation}) => {
   let { itemList, personList } = route.params;
-  console.log("In Item:");
-      console.log(itemList);
+  //console.log("In Item:");
+  //console.log(itemList);
 
   const [inputText, setInputText] = useState('');
 
   //Dropdown
   const [selectedPerson, setSelected] = useState(null);
   const updateSelected = newData => {
+    console.log(personList);
+    for (person of personList) {
+      if (person.name === newData) {
+        newData = person;
+      }
+    }
     console.log(newData);
     setSelected(newData);
   };
   //Dropdown end
 
   //console.log(itemList);
+  const resultsScreen = () => {
+    navigation.reset({
+      index: 1,
+      routes: [
+        {
+          name: 'ResultsScreen',
+          params: { itemList, personList }
+        },
+      ],
+    });
+  }
 
   const addNewPerson = () => {
-    const newPerson = Person.createPerson(inputText, itemList.length);
+    const newPerson = Person.createPerson(inputText);
     console.log(newPerson);
     personList = [...personList, newPerson];
     navigation.reset({
@@ -48,7 +65,7 @@ const ItemScreen = ({route, navigation}) => {
   return (
     <View style = {styles.topContainer}>
     <View style={styles.container}>
-      <Dropdown personList={personList} selectedPerson={selectedPerson} updateSelected={updateSelected} />
+      <Dropdown personList={personList} selectedPerson={selectedPerson} updateSelected={updateSelected} navigation={navigation} itemList={{itemList}}/>
       <TextInput
         style={styles.textInput}
         placeholder="Enter Name"
@@ -64,8 +81,14 @@ const ItemScreen = ({route, navigation}) => {
     {selectedPerson && itemList.map((item, index) => (
       <Item key={index} user={item} person={selectedPerson}/>
     ))}
+    <View style = {styles.bottomContainer}>
 
     </View>
+    <TouchableOpacity onPress={resultsScreen} style={styles.submitButton}>
+        <Text>Submit →</Text>
+      </TouchableOpacity>
+    </View>
+    
   );
 }
 
@@ -75,29 +98,36 @@ const styles = StyleSheet.create({
   topContainer: {
     flexDirection: 'column',
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'top',
-    backgroundColor: '#ffffff',
+    backgroundColor: '#22272e',
   },
   container: {
     flexDirection: 'row',
-    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'top',
-    backgroundColor: '#ffffff',
+    backgroundColor: '#22272e',
+    borderColor: '#00ffcc',
+    borderBottomWidth: 2,
   },
   textInput: {
     flex: 70,
     height: 40,
-    borderColor: 'gray',
+    backgroundColor: '#393e45',
+    placeholder: 'white',
+    color: 'white',
+    borderColor: '#22272e',
     borderWidth: 1,
+    borderRadius: 20,
     paddingHorizontal: 10,
     alignItems: 'center',
+    //borderRadius: 10,
   },
   enterButton: {
     flex: 20,
     backgroundColor: '#DDDDDD',
+    borderColor: '#DDDDDD',
+    borderWidth: 1,
     padding: 10,
     alignItems: 'center',
     marginLeft: 10,
@@ -108,6 +138,29 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginVertical: 5,
+  },
+  submitButton: {
+    flex: 20, // same as enterButton
+    backgroundColor: '#DDDDDD',
+    borderColor: '#DDDDDD',
+    borderWidth: 2,
+    padding: 10,
+    alignItems: 'center',
+    marginLeft: 50,
+    marginRight: 50,
+    height: 40,
+    position: 'absolute', // Positioning it absolutely
+    right: 0, // Align to the right
+    bottom: 50, // Align to the bottom
+  },
+
+  bottomContainer: {
+    flexDirection: 'row',
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'right',
+    justifyContent: 'bottom',
+    backgroundColor: '#ffffff',
   },
 });
 

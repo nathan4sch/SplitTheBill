@@ -1,9 +1,9 @@
 const Person = {
-  createPerson: (name, itemListLength) => {
+  createPerson: (name) => {
     return { 
       name: name || 'New Person', 
       Total: 0.0,
-      items: Array(itemListLength).fill(false) // Initialize the items list with false booleans
+      items: [] // Initialize the items list with false booleans
     };
   },
 
